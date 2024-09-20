@@ -1,0 +1,27 @@
+# frozen_string_literal: true
+
+# Multiples of 3 or 5
+# https://www.codewars.com/kata/514b92a657cdc65150000006
+
+# 6kyu
+#
+# If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
+#
+# Finish the solution so that it returns the sum of all the multiples of 3 or 5 below the number passed in.
+#
+# Additionally, if the number is negative, return 0.
+#
+# Note: If the number is a multiple of both 3 and 5, only count it once.
+
+def solution(number)
+  return 0 if number.negative?
+
+  (number - 1).yield_self do |n|
+    [3, 5, 15]
+      .map {|i| i * (n/i).floor.yield_self { |s| s * (s+1) / 2 } }
+      .each_slice(2)
+      .map(&:sum)
+      .reduce {|acc, i| acc - i}
+  end
+end
+
