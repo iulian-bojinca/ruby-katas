@@ -16,9 +16,9 @@
 def solution(number)
   return 0 if number.negative?
 
-  (number - 1).yield_self do |n|
+  (number - 1).then do |n|
     [3, 5, 15]
-      .map {|i| i * (n/i).floor.yield_self { |s| s * (s+1) / 2 } }
+      .map {|i| i * (n/i).floor.then { |s| s * (s+1) / 2 } }
       .each_slice(2)
       .map(&:sum)
       .reduce {|acc, i| acc - i}
